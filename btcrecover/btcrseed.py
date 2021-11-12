@@ -27,7 +27,6 @@ disable_security_warnings = True
 import sys, os, io, base64, hashlib, hmac, difflib, itertools, \
        unicodedata, collections, struct, glob, atexit, re, random, multiprocessing, binascii, copy, datetime
 import bisect
-from bitstring import BitArray
 from typing import AnyStr, List, Optional, Sequence, TypeVar, Union
 
 
@@ -75,6 +74,16 @@ try:
     nacl_available = True
 except:
     pass
+
+bitstring_available = False
+try:
+    from bitstring import BitArray
+
+    bitstring_available = True
+except:
+    pass
+
+
 
 _T = TypeVar("_T")
 
@@ -2206,6 +2215,8 @@ class WalletHelium(WalletBIP39):
     def __init__(self, path = None, loading = False):
         if not nacl_available:
             exit("Helium Wallet Requires the nacl module, this can be installed via pip3 install pynacl")
+        if not bitstring_available:
+            exit("Helium Wallet Requires the bitstring module, this can be installed via pip3 install bitstring")
         super(WalletHelium, self).__init__(None, loading)
 
 

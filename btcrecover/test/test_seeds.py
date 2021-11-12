@@ -90,6 +90,17 @@ def can_load_nacl():
             is_nacl_loadable = False
     return is_nacl_loadable
 
+is_bitstring_loadable = None
+def can_load_bitstring():
+    global is_bitstring_loadable
+    if is_bitstring_loadable is None:
+        try:
+            import bitstring
+            is_bitstring_loadable = True
+        except:
+            is_bitstring_loadable = False
+    return is_bitstring_loadable
+
 # Similar to unittest.skipUnless, except the first arg is a function returning a bool instead
 # of just a bool. This function isn't called until just before the test is to be run. This
 # permits checking the character mode (which isn't set until later) and prevents multiprocessing
@@ -871,11 +882,13 @@ class TestRecoveryFromAddress(unittest.TestCase):
                             "have hint welcome skate cinnamon rabbit cable payment gift uncover column duck scissors wedding decorate under marine hurry scrub rapid change roast print arch")
 
     @skipUnless(can_load_nacl, "requires nacl module")
+    @skipUnless(can_load_bitstring, "requires nacl module")
     def test_Helium_mobile(self):
         self.address_tester(btcrseed.WalletHelium, "13hP2Vb1XVcMYrVNdwUW4pF3ZDj8CnET92zzUHqYp7DxxzVASbB", 1,
                             "arm hundred pride female steel describe tip physical weapon peace write advice")
 
     @skipUnless(can_load_nacl, "requires nacl module")
+    @skipUnless(can_load_bitstring, "requires nacl module")
     def test_Helium_bip39(self):
         self.address_tester(btcrseed.WalletHelium, "14qWwWH3JZcYkqvbmziU4J12nKQPabp5GkKUmmZi4n94YQ7LbwS", 1,
                             "rather ensure noble bargain armor hold embody friend ahead senior earth result")
